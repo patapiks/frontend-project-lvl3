@@ -5,39 +5,38 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build
-      run: |
-        make install
-        make build
-      env:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, build
+        run: |
+          make install
+          make build
+        env:
           CI: true
-    - name: Run linter
-      run: |
-        make lint
-    - name: Test & publish code coverage
-      uses: paambaati/codeclimate-action@v2.4.0
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.KEY_TEST_COVERAGE_PROJECT3 }}
-      with:
-        coverageCommand: make test-coverage
-        debug: true
+      - name: Run linter
+        run: |
+          make lint
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.KEY_TEST_COVERAGE_PROJECT3 }}
+        with:
+          coverageCommand: make test-coverage
+          debug: true
