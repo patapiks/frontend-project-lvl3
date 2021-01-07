@@ -4,13 +4,18 @@ publish:
 	npm publish --dry-run
 lint:
 	npx eslint .
-build:
-	rm -rf dist
-	npm run build
+#build:
+#	rm -rf dist
+#	npm run build
 test:
 	npm test
 test-coverage:
 	npm test -- --coverage
+develop:
+	npx webpack serve
+build:
+	rm -rf dist
+	NODE_ENV=production npx webpack
 
 # ** Configuration **
 
@@ -33,3 +38,6 @@ eslint-install:
 # Jest
 jest-install:
 	npm i --save-dev jest jest-cli eslint-plugin-jest babel-jest babel-core@^7.0.0-0
+# Webpack
+webpack-install:
+	npm i --save-dev webpack webpack-cli webpack-dev-server
