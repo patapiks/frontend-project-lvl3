@@ -15,8 +15,11 @@
         <div class="row justify-content-center">
           <div class="col-7">
             <form>
-              <input type="text" class="w-75" placeholder="RCC link">
-              <button type="submit" class="btn btn-primary" style="width: 100px">Add</button>
+              <input type="text" class="w-75 form-control m-1" placeholder="RCC link" value="" style="display: inline-flex;">
+              <button type="submit" class="btn btn-primary m-1" style="width: 100px">Add</button>
+              <div class="invalid-feedback text-danger">
+                Must be valid url
+              </div>
             </form>
           </div>
         </div>
