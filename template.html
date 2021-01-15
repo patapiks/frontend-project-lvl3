@@ -4,6 +4,23 @@
     <title>RSS Reader</title>
   </head>
   <body>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-primary full-article" href="" role="button">Full article</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <header>
       <div class="container-fluit bg-dark text-white pb-5 pt-5">
         <div class="row justify-content-center">
@@ -30,9 +47,17 @@
         </div>
       </div>
     </header>
-    <main>
+    <main class="container-fluit">
       <div class="row justify-content-center mt-5">
         <div id="main" class="col-7">
+          <h1 id="headingFeeds"></h1>
+          <div>
+            <ul class="list-group" id="feeds"></ul>
+          </div>
+          <h1 class="mt-5" id="headingPosts"></h1>
+          <div>
+            <ul class="list-group" id="posts"></ul>
+          </div>
         </div>
       </div>
     </main>
