@@ -60,6 +60,7 @@ export const getNewPosts = (url, posts) => {
     const currentPostsLinks = posts.map(({ link }) => link);
     const checkPostsLinks = checkPosts.map(({ link }) => link);
     const newPostsLinks = _.difference(checkPostsLinks, currentPostsLinks);
+    console.log(checkPosts);
 
     return checkPosts.filter(({ link }) => newPostsLinks.includes(link));
   });
