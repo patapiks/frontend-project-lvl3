@@ -2,7 +2,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2dc756bf27f0bf84f043/test_coverage)](https://codeclimate.com/github/patapiks/frontend-project-lvl3/test_coverage)
 ![Node.js CI](https://github.com/patapiks/frontend-project-lvl3/workflows/Node.js%20CI/badge.svg)
 
-**https://vigorous-feynman-8a4682.netlify.app**
+**frontend-project-lvl3.patapiks.vercel.app**
 
 ### Hexlet tests and linter status:
 
