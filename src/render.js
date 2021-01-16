@@ -37,6 +37,13 @@ export default (watchedState, path, value) => {
   if (path === 'state' && value === 'sending') {
     const button = document.querySelector('button');
     button.setAttribute('disabled', 'disabled');
+    const div = document.querySelector('#feedback');
+    const input = document.querySelector('input');
+    input.classList.remove('is-invalid');
+    input.classList.add('is-valid');
+    div.classList.remove('invalid-feedback', 'text-danger');
+    div.classList.add('valid-feedback', 'text-success');
+    div.textContent = i18next.t('wait');
   }
   if (path === 'modal.state' && value === 'show') {
     const modalTitle = document.querySelector('.modal-title');

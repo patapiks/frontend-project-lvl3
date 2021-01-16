@@ -5,7 +5,7 @@
     <meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
     <title>RSS Reader</title>
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <header>
+    <header class="flex-grow-1">
       <div class="container-xxl bg-dark text-white pb-5 pt-5">
         <div class="row justify-content-center">
           <div class="col-7">
@@ -50,7 +50,7 @@
       </div>
     </header>
     <main class="container-xxl">
-      <div class="row justify-content-center mt-5 mb-5">
+      <div class="row justify-content-center mt-5">
         <div id="main" class="col-7">
           <h1 id="headingFeeds"></h1>
           <div>
@@ -63,5 +63,12 @@
         </div>
       </div>
     </main>
+    <footer class="footer border-top py-3 mt-5">
+      <div class="container-xl">
+        <div class="text-center">
+          Created by <a style="text-decoration:none" href="https://github.com/patapiks" target="_blank">Sergey Goev</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

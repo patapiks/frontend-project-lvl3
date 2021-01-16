@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import runApp from './app';
 import resources from './locales/index';
-import './style.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/modal';
 
 const { en, ru } = resources;
