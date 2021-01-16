@@ -3,6 +3,8 @@ import onChange from 'on-change';
 import render from './render';
 import parser from './parser';
 import { getContent, getNewPosts, validateUrl } from './util';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/js/dist/modal';
 
 export default () => {
   const state = {
