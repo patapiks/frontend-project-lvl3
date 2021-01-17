@@ -1,49 +1,44 @@
 import i18next from 'i18next';
-import { getFeeds, getPosts } from './util';
+import { addFeeds, addPosts } from './util';
 
 export default (watchedState, path, value) => {
-  // Refactoring switchCase
+  const feedback = document.querySelector('#feedback');
+  const input = document.querySelector('input');
+  const button = document.querySelector('#formButton');
+  const postList = document.querySelector('#posts');
+
+  // Maybe switch?
   if (path === 'state' && value === 'failed') {
-    const div = document.querySelector('#feedback');
-    const input = document.querySelector('input');
     input.classList.remove('is-valid');
     input.classList.add('is-invalid');
-    div.classList.remove('valid-feedback', 'text-success');
-    div.classList.add('invalid-feedback', 'text-danger');
-    div.textContent = watchedState.errors;
-    const button = document.querySelector('button');
+    feedback.classList.remove('valid-feedback', 'text-success');
+    feedback.classList.add('invalid-feedback', 'text-danger');
+    feedback.textContent = watchedState.errors;
     button.removeAttribute('disabled');
   }
   if (path === 'state' && value === 'finished') {
-    const div = document.querySelector('#feedback');
-    const input = document.querySelector('input');
     input.classList.remove('is-invalid');
     input.classList.add('is-valid');
-    div.classList.remove('invalid-feedback', 'text-danger');
-    div.classList.add('valid-feedback', 'text-success');
-    div.textContent = i18next.t('success');
-    const button = document.querySelector('button');
+    feedback.classList.remove('invalid-feedback', 'text-danger');
+    feedback.classList.add('valid-feedback', 'text-success');
+    feedback.textContent = i18next.t('success');
     button.removeAttribute('disabled');
 
     document.querySelector('#headingFeeds').textContent = i18next.t('heading.feeds');
-    document.querySelector('#feeds').innerHTML = getFeeds(watchedState.feeds);
+    document.querySelector('#feeds').innerHTML = addFeeds(watchedState.feeds);
     document.querySelector('#headingPosts').textContent = i18next.t('heading.posts');
-    document.querySelector('#posts').innerHTML = getPosts(watchedState.posts);
+    postList.innerHTML = addPosts(watchedState.posts);
   }
   if (path === 'state' && value === 'updating') {
-    const updatingUl = document.querySelector('#posts');
-    updatingUl.innerHTML = getPosts(watchedState.posts);
+    postList.innerHTML = addPosts(watchedState.posts);
   }
   if (path === 'state' && value === 'sending') {
-    const button = document.querySelector('button');
     button.setAttribute('disabled', 'disabled');
-    const div = document.querySelector('#feedback');
-    const input = document.querySelector('input');
     input.classList.remove('is-invalid');
     input.classList.add('is-valid');
-    div.classList.remove('invalid-feedback', 'text-danger');
-    div.classList.add('valid-feedback', 'text-success');
-    div.textContent = i18next.t('wait');
+    feedback.classList.remove('invalid-feedback', 'text-danger');
+    feedback.classList.add('valid-feedback', 'text-success');
+    feedback.textContent = i18next.t('loading');
   }
   if (path === 'modal.state' && value === 'show') {
     const modalTitle = document.querySelector('.modal-title');
@@ -54,7 +49,6 @@ export default (watchedState, path, value) => {
     fullArticle.href = watchedState.posts[watchedState.modal.id].link;
   }
   if (path.includes('posts')) {
-    const updatingUl = document.querySelector('#posts');
-    updatingUl.innerHTML = getPosts(watchedState.posts);
+    postList.innerHTML = addPosts(watchedState.posts);
   }
 };

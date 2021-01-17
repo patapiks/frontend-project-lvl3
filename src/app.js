@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import onChange from 'on-change';
 import render from './render';
 import parser from './parser';
-import { getContent, getNewPosts, validateUrl } from './util';
+import { getContent, addNewPosts, validateUrl } from './util';
 
 export default () => {
   const state = {
@@ -18,6 +18,19 @@ export default () => {
   };
 
   const watchedState = onChange(state, (path, value) => render(watchedState, path, value));
+
+  const postList = document.querySelector('#posts');
+  postList.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      watchedState.posts[e.target.id].state = 'viewed';
+    }
+    if (e.target.tagName === 'BUTTON') {
+      watchedState.posts[e.target.id].state = 'viewed';
+      state.modal.id = e.target.id;
+      watchedState.modal.state = 'show';
+      state.modal.state = 'hidden';
+    }
+  });
 
   const form = document.querySelector('form');
   form.addEventListener('submit', (e) => {
@@ -43,24 +56,8 @@ export default () => {
             watchedState.state = 'failed';
           })
           .finally(function updating() {
-            const hrefs = document.querySelector('main').querySelectorAll('a');
-            hrefs.forEach((href) => {
-              href.addEventListener('click', (el) => {
-                watchedState.posts[el.target.id].state = 'viewed';
-              });
-            });
-            const buttons = document.querySelector('main').querySelectorAll('button');
-            buttons.forEach((button) => {
-              button.addEventListener('click', (el) => {
-                watchedState.posts[el.target.id].state = 'viewed';
-                state.modal.id = el.target.id;
-                watchedState.modal.state = 'show';
-                state.modal.state = 'hidden';
-              });
-            });
-
             const promises = state.links.map((link) => {
-              const result = getNewPosts(link, state.posts).then((newPosts) => {
+              const result = addNewPosts(link, state.posts).then((newPosts) => {
                 state.posts = [...newPosts, ...state.posts];
               });
               return result;

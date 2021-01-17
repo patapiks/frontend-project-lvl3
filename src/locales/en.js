@@ -1,6 +1,6 @@
 export default {
   translation: {
-    wait: 'Please wait loading',
+    loading: 'Please wait loading',
     success: 'Rss has been loaded',
     validateErrors: {
       required: 'Please fill out this field',
