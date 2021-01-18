@@ -62,8 +62,8 @@ export default () => {
             form.reset();
             input.focus();
           })
-          .catch(() => {
-            state.errors = i18next.t('validateErrors.notRss');
+          .catch((err) => {
+            state.errors = err;
             watchedState.state = 'failed';
           })
           .finally(function updating() {
