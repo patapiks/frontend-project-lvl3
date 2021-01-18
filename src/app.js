@@ -3,6 +3,17 @@ import onChange from 'on-change';
 import render from './render';
 import parser from './parser';
 import { getContent, addNewPosts, validateUrl } from './util';
+import resources from './locales/index';
+
+const { en, ru } = resources;
+i18next.init({
+  lng: 'en',
+  debug: true,
+  resources: {
+    en,
+    ru,
+  },
+});
 
 export default () => {
   const state = {

@@ -4,6 +4,7 @@ import resources from './locales/index';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/modal';
 
+/*
 const { en, ru } = resources;
 i18next
   .init({
@@ -15,3 +16,5 @@ i18next
     },
   })
   .then(() => runApp());
+  */
+runApp();
