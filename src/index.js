@@ -1,6 +1,6 @@
-import i18next from 'i18next';
+// import i18next from 'i18next';
 import runApp from './app';
-import resources from './locales/index';
+// import resources from './locales/index';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/js/dist/modal';
 
