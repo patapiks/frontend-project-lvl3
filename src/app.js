@@ -43,8 +43,8 @@ export default () => {
     }
   });
 
-  const form = document.querySelector('#formButton');
-  form.addEventListener('click', (e) => {
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     watchedState.state = 'sending';
     const input = document.querySelector('input');
@@ -59,11 +59,11 @@ export default () => {
             state.posts = [...posts, ...state.posts];
             state.links.push(url);
             watchedState.state = 'finished';
-            // form.reset();
-            // input.focus();
+            form.reset();
+            input.focus();
           })
           .catch(() => {
-            state.errors = i18next.t('validateErrors.notRss') + url;
+            state.errors = i18next.t('validateErrors.notRss');
             watchedState.state = 'failed';
           })
           .finally(function updating() {
