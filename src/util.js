@@ -47,7 +47,7 @@ export const addPosts = (posts) => {
 };
 
 export const getContent = (url) => {
-  const link = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+  const link = `https://hexlet-allorigins.herokuapp.com/get?url=${encodeURIComponent(url)}`;
   return axios.get(link).then((response) => response.data);
 };
 /*
