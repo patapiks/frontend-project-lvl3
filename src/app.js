@@ -32,8 +32,8 @@ export default () => {
     }
   });
 
-  const form = document.querySelector('form');
-  form.addEventListener('submit', (e) => {
+  const form = document.querySelector('#formButton');
+  form.addEventListener('click', (e) => {
     e.preventDefault();
     watchedState.state = 'sending';
     const input = document.querySelector('input');
@@ -48,10 +48,11 @@ export default () => {
             state.posts = [...posts, ...state.posts];
             state.links.push(url);
             watchedState.state = 'finished';
-            form.reset();
-            input.focus();
+            // form.reset();
+            // input.focus();
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err);
             state.errors = i18next.t('validateErrors.notRss');
             watchedState.state = 'failed';
           })
