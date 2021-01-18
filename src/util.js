@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import * as yup from 'yup';
 import _ from 'lodash';
+import axios from 'axios';
 import parser from './parser';
 
 export const validateUrl = (url, links) => {
@@ -47,12 +48,18 @@ export const addPosts = (posts) => {
 
 export const getContent = (url) => {
   const link = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+  return axios.get(link).then((response) => response.data);
+};
+/*
+export const getContent = (url) => {
+  const link = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
   const contet = fetch(link).then((response) => {
     if (response.ok) return response.json();
     throw new Error(i18next.t('validateErrors.notRss'));
   });
   return contet;
 };
+*/
 
 export const addNewPosts = (url, posts) => {
   const newPosts = getContent(url).then((data) => {
