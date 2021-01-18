@@ -63,8 +63,7 @@ export default () => {
             input.focus();
           })
           .catch((err) => {
-            console.log(err);
-            state.errors = i18next.t('validateErrors.notRss');
+            state.errors = err;
             watchedState.state = 'failed';
           })
           .finally(function updating() {
