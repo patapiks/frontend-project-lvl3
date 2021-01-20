@@ -67,6 +67,7 @@ export default () => {
             state.errors = err;
             watchedState.state = 'failed';
           })
+          /*
           .finally(function updating() {
             const promises = state.links.map((link) => {
               const result = addNewPosts(link, state.posts).then((newPosts) => {
@@ -83,6 +84,7 @@ export default () => {
             });
           });
       })
+      */
       .catch((err) => {
         state.errors = err.message;
         watchedState.state = 'failed';
