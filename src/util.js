@@ -48,18 +48,8 @@ export const addPosts = (posts) => {
 
 export const getContent = (url) => {
   const link = 'https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=';
-  return axios.get(`${link}${encodeURIComponent(url)}`).then((response) => response.data);
+  return axios.get(`${link}${url}`).then((response) => response.data);
 };
-/*
-export const getContent = (url) => {
-  const link = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-  const contet = fetch(link).then((response) => {
-    if (response.ok) return response.json();
-    throw new Error(i18next.t('validateErrors.notRss'));
-  });
-  return contet;
-};
-*/
 
 export const addNewPosts = (url, posts) => {
   const newPosts = getContent(url).then((data) => {
