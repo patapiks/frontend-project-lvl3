@@ -66,8 +66,8 @@ export default () => {
             // state.errors = i18next.t('validateErrors.notRss');
             state.errors = err;
             watchedState.state = 'failed';
-          })
-          /*
+          });
+        /*
           .finally(function updating() {
             const promises = state.links.map((link) => {
               const result = addNewPosts(link, state.posts).then((newPosts) => {
@@ -83,8 +83,8 @@ export default () => {
               }, 5000);
             });
           });
+          */
       })
-      */
       .catch((err) => {
         state.errors = err.message;
         watchedState.state = 'failed';
