@@ -62,17 +62,13 @@ export default () => {
           input.focus();
         })
         .catch((error) => {
-          state.errors = error.response.status;
-          watchedState.state = 'failed';
-          /*
-          if (error.message === 'Network Error' && !error.response) {
+          if (!error.name === 'TypeError') {
             state.errors = 'Network error';
             watchedState.state = 'failed';
           } else {
             state.errors = i18next.t('validateErrors.notRss');
             watchedState.state = 'failed';
           }
-          */
         })
         .finally(function updating() {
           setTimeout(() => {
