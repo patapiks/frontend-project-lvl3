@@ -17,7 +17,12 @@ export const validateUrl = (url, links) => {
 
   const schema = yup.string().url().required().notOneOf(links);
 
-  return schema.validate(url);
+  try {
+    schema.validateSync(url);
+    return true;
+  } catch (e) {
+    return e.message;
+  }
 };
 
 export const addFeeds = (feeds) => {

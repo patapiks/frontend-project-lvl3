@@ -50,46 +50,44 @@ export default () => {
     const input = document.querySelector('input');
     const url = input.value;
 
-    validateUrl(url, state.links)
-      .then(() => {
-        getContent(url)
-          .then((data) => {
-            const [feed, posts] = parser(data.contents);
-            state.feeds = [feed, ...state.feeds];
-            state.posts = [...posts, ...state.posts];
-            state.links.push(url);
-            watchedState.state = 'finished';
-            form.reset();
-            input.focus();
-          })
-          .catch((error) => {
-            if (error.message === 'Network Error' && !error.response) {
-              state.errors = 'Network error';
-              watchedState.state = 'failed';
-            } else {
-              state.errors = i18next.t('validateErrors.notRss');
-              watchedState.state = 'failed';
-            }
-          })
-          .finally(function updating() {
-            setTimeout(() => {
-              const promises = state.links.map((link) => {
-                const result = addNewPosts(link, state.posts).then((newPosts) => {
-                  state.posts = [...newPosts, ...state.posts];
-                });
-                return result;
+    if (validateUrl(url, state.links) === true) {
+      getContent(url)
+        .then((data) => {
+          const [feed, posts] = parser(data.contents);
+          state.feeds = [feed, ...state.feeds];
+          state.posts = [...posts, ...state.posts];
+          state.links.push(url);
+          watchedState.state = 'finished';
+          form.reset();
+          input.focus();
+        })
+        .catch((error) => {
+          if (error.message === 'Network Error' && !error.response) {
+            state.errors = 'Network error';
+            watchedState.state = 'failed';
+          } else {
+            state.errors = i18next.t('validateErrors.notRss');
+            watchedState.state = 'failed';
+          }
+        })
+        .finally(function updating() {
+          setTimeout(() => {
+            const promises = state.links.map((link) => {
+              const result = addNewPosts(link, state.posts).then((newPosts) => {
+                state.posts = [...newPosts, ...state.posts];
               });
-              Promise.all(promises).then(() => {
-                watchedState.state = 'updating';
-                state.state = 'filling';
-                updating();
-              });
-            }, 5000);
-          });
-      })
-      .catch((err) => {
-        state.errors = err.message;
-        watchedState.state = 'failed';
-      });
+              return result;
+            });
+            Promise.all(promises).then(() => {
+              watchedState.state = 'updating';
+              state.state = 'filling';
+              updating();
+            });
+          }, 5000);
+        });
+    } else {
+      state.errors = validateUrl(url, state.links);
+      watchedState.state = 'failed';
+    }
   });
 };
