@@ -62,28 +62,26 @@ export default () => {
             form.reset();
             input.focus();
           })
-          .catch((err) => {
-            // state.errors = i18next.t('validateErrors.notRss');
-            state.errors = err;
+          .catch(() => {
+            state.errors = i18next.t('validateErrors.notRss');
+            // state.errors = err;
             watchedState.state = 'failed';
-          });
-        /*
+          })
           .finally(function updating() {
-            const promises = state.links.map((link) => {
-              const result = addNewPosts(link, state.posts).then((newPosts) => {
-                state.posts = [...newPosts, ...state.posts];
+            setTimeout(() => {
+              const promises = state.links.map((link) => {
+                const result = addNewPosts(link, state.posts).then((newPosts) => {
+                  state.posts = [...newPosts, ...state.posts];
+                });
+                return result;
               });
-              return result;
-            });
-            Promise.all(promises).then(() => {
-              setTimeout(() => {
+              Promise.all(promises).then(() => {
                 watchedState.state = 'updating';
                 state.state = 'filling';
                 updating();
-              }, 5000);
-            });
+              });
+            }, 5000);
           });
-          */
       })
       .catch((err) => {
         state.errors = err.message;

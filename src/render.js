@@ -38,7 +38,7 @@ export default (watchedState, path, value) => {
     input.classList.add('is-valid');
     feedback.classList.remove('invalid-feedback', 'text-danger');
     feedback.classList.add('valid-feedback', 'text-success');
-    feedback.textContent = i18next.t('loading');
+    // feedback.textContent = i18next.t('loading');
   }
   if (path === 'modal.state' && value === 'show') {
     const modalTitle = document.querySelector('.modal-title');

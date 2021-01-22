@@ -48,7 +48,7 @@ export const addPosts = (posts) => {
 
 export const getContent = (url) => {
   const link = 'https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=';
-  return axios.get(`${link}${url}`).then((response) => response.data);
+  return axios.get(`${link}${encodeURIComponent(url)}`).then((response) => response.data);
 };
 
 export const addNewPosts = (url, posts) => {
