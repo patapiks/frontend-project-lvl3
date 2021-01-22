@@ -36,7 +36,7 @@ export const addPosts = (posts) => {
   const result = posts.map(({ link, title, state }, index) => {
     const post = `<li class="list-group-item d-flex justify-content-between align-items-start">
     <a id="${index}" target="_blank" href="${link}" 
-    class="${state === 'viewed' ? 'fw-normal' : 'fw-bold'}">
+    class="${state === 'viewed' ? 'fw-normal font-weight-normal' : 'fw-bold font-weight-bold'}">
     ${title}</a>
     <button id="${index}" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
     ${i18next.t('button.preview')}</button>

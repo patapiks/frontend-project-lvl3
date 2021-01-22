@@ -62,10 +62,15 @@ export default () => {
             form.reset();
             input.focus();
           })
-          .catch(() => {
-            state.errors = i18next.t('validateErrors.notRss');
-            // state.errors = err;
-            watchedState.state = 'failed';
+          .catch((error) => {
+            if (!error.response) {
+              state.errors = 'Network error';
+              watchedState.state = 'failed';
+            } else {
+              state.errors = i18next.t('validateErrors.notRss');
+              // state.errors = err;
+              watchedState.state = 'failed';
+            }
           })
           .finally(function updating() {
             setTimeout(() => {

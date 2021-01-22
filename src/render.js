@@ -15,6 +15,7 @@ export default (watchedState, path, value) => {
     feedback.classList.add('invalid-feedback', 'text-danger');
     feedback.textContent = watchedState.errors;
     button.removeAttribute('disabled');
+    input.removeAttribute('readonly');
   }
   if (path === 'state' && value === 'finished') {
     input.classList.remove('is-invalid');
@@ -23,6 +24,7 @@ export default (watchedState, path, value) => {
     feedback.classList.add('valid-feedback', 'text-success');
     feedback.textContent = i18next.t('success');
     button.removeAttribute('disabled');
+    input.removeAttribute('readonly');
 
     document.querySelector('#headingFeeds').textContent = i18next.t('heading.feeds');
     document.querySelector('#feeds').innerHTML = addFeeds(watchedState.feeds);
@@ -34,6 +36,7 @@ export default (watchedState, path, value) => {
   }
   if (path === 'state' && value === 'sending') {
     button.setAttribute('disabled', 'disabled');
+    input.setAttribute('readonly', 'readonly');
     input.classList.remove('is-invalid');
     input.classList.add('is-valid');
     feedback.classList.remove('invalid-feedback', 'text-danger');
