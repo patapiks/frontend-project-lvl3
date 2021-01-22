@@ -8,20 +8,16 @@ export const validateUrl = (url, links) => {
   yup.setLocale({
     mixed: {
       required: i18next.t('validateErrors.required'),
+      notOneOf: i18next.t('validateErrors.duplicate'),
     },
     string: {
       url: i18next.t('validateErrors.url'),
     },
   });
 
-  const schema = yup.string().url().required();
+  const schema = yup.string().url().required().notOneOf(links);
 
-  const isValid = schema.validate(url).then(() => {
-    if (links.includes(url)) {
-      throw new Error(i18next.t('validateErrors.duplicate'));
-    } else return true;
-  });
-  return isValid;
+  return schema.validate(url);
 };
 
 export const addFeeds = (feeds) => {
