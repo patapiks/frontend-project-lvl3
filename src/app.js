@@ -62,6 +62,9 @@ export default () => {
           input.focus();
         })
         .catch((error) => {
+          state.errors = error.status;
+          watchedState.state = 'failed';
+          /*
           if (error.message === 'Network Error' && !error.response) {
             state.errors = 'Network error';
             watchedState.state = 'failed';
@@ -69,6 +72,7 @@ export default () => {
             state.errors = i18next.t('validateErrors.notRss');
             watchedState.state = 'failed';
           }
+          */
         })
         .finally(function updating() {
           setTimeout(() => {
