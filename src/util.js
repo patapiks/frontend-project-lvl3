@@ -7,11 +7,11 @@ import parser from './parser';
 export const validateUrl = (url, links) => {
   yup.setLocale({
     mixed: {
-      required: i18next.t('validateErrors.required'),
-      notOneOf: i18next.t('validateErrors.duplicate'),
+      required: i18next.t('errors.required'),
+      notOneOf: i18next.t('errors.duplicate'),
     },
     string: {
-      url: i18next.t('validateErrors.url'),
+      url: i18next.t('errors.url'),
     },
   });
 
@@ -53,7 +53,7 @@ export const getContent = (url) => {
     .get(`${link}${encodeURIComponent(url)}`)
     .then((response) => response.data)
     .catch(() => {
-      throw new Error('Network');
+      throw new Error(i18next.t('errors.network'));
     });
 };
 

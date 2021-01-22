@@ -50,7 +50,8 @@ export default () => {
     const input = document.querySelector('input');
     const url = input.value;
 
-    if (validateUrl(url, state.links) === true) {
+    const isValid = validateUrl(url, state.links);
+    if (isValid) {
       getContent(url)
         .then((data) => {
           const [feed, posts] = parser(data.contents);
@@ -62,11 +63,12 @@ export default () => {
           input.focus();
         })
         .catch((error) => {
-          if (error.message === 'Network') {
-            state.errors = 'Network error';
+          // Refactoring check
+          if (error.message === 'Network error') {
+            state.errors = i18next.t('errors.network');
             watchedState.state = 'failed';
           } else {
-            state.errors = i18next.t('validateErrors.notRss');
+            state.errors = i18next.t('errors.notRss');
             watchedState.state = 'failed';
           }
         })
@@ -86,7 +88,7 @@ export default () => {
           }, 5000);
         });
     } else {
-      state.errors = validateUrl(url, state.links);
+      state.errors = isValid;
       watchedState.state = 'failed';
     }
   });

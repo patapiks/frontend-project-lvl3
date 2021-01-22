@@ -1,7 +1,20 @@
 export default {
   translation: {
-    error_notRss: 'Ресурс не содержит Rss',
-    error_validUrl: 'Некорректный URL',
-    error_alreadyExists: 'Rss уже добавлен',
+    loading: 'Пожалуйста подождите идет загрузка',
+    success: 'Новостная лента загружена',
+    errors: {
+      required: 'Пожалуйста заполните это поле',
+      url: 'Не действительная ссылка',
+      duplicate: 'Новостная лента уже загружена',
+      notRss: 'Этот источник не содержит новостной ленты',
+      network: 'Ошибка сети',
+    },
+    heading: {
+      feeds: 'Канал',
+      posts: 'Новости',
+    },
+    button: {
+      preview: 'Предпросмотр',
+    },
   },
 };
