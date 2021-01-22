@@ -50,8 +50,7 @@ export default () => {
     const input = document.querySelector('input');
     const url = input.value;
 
-    const isValid = validateUrl(url, state.links);
-    if (isValid) {
+    if (validateUrl(url, state.links) === true) {
       getContent(url)
         .then((data) => {
           const [feed, posts] = parser(data.contents);
@@ -88,7 +87,7 @@ export default () => {
           }, 5000);
         });
     } else {
-      state.errors = isValid;
+      state.errors = validateUrl(url, state.links);
       watchedState.state = 'failed';
     }
   });
