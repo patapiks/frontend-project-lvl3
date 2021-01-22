@@ -49,7 +49,12 @@ export const addPosts = (posts) => {
 
 export const getContent = (url) => {
   const link = 'https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=';
-  return axios.get(`${link}${encodeURIComponent(url)}`).then((response) => response.data);
+  return axios
+    .get(`${link}${encodeURIComponent(url)}`)
+    .then((response) => response.data)
+    .catch(() => {
+      throw new Error('Network');
+    });
 };
 
 export const addNewPosts = (url, posts) => {

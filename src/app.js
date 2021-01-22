@@ -62,7 +62,7 @@ export default () => {
           input.focus();
         })
         .catch((error) => {
-          if (!error.name === 'TypeError') {
+          if (error.message === 'Network') {
             state.errors = 'Network error';
             watchedState.state = 'failed';
           } else {
