@@ -37,10 +37,10 @@ export default (watchedState, path, value) => {
   if (path === 'state' && value === 'sending') {
     button.setAttribute('disabled', 'disabled');
     input.setAttribute('readonly', 'readonly');
-    input.classList.remove('is-invalid');
-    input.classList.add('is-valid');
-    feedback.classList.remove('invalid-feedback', 'text-danger');
-    feedback.classList.add('valid-feedback', 'text-success');
+    // input.classList.remove('is-invalid');
+    // input.classList.add('is-valid');
+    // feedback.classList.remove('invalid-feedback', 'text-danger');
+    // feedback.classList.add('valid-feedback', 'text-success');
     // feedback.textContent = i18next.t('loading');
   }
   if (path === 'modal.state' && value === 'show') {

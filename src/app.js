@@ -63,12 +63,11 @@ export default () => {
             input.focus();
           })
           .catch((error) => {
-            if (!error.response) {
+            if (error.message === 'Network Error') {
               state.errors = 'Network error';
               watchedState.state = 'failed';
             } else {
               state.errors = i18next.t('validateErrors.notRss');
-              // state.errors = err;
               watchedState.state = 'failed';
             }
           })
