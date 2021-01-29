@@ -8,6 +8,6 @@ console.log(data);
 
 test('Parsing', () => {
   const result = parser(data);
-  expect(result[0].title).toEqual('RSS Title');
-  expect(result[0]).toHaveProperty('link', 'http://www.example.com/main.html');
+  expect(result.feed.title).toEqual('RSS Title');
+  expect(result.feed).toHaveProperty('link', 'http://www.example.com/main.html');
 });
