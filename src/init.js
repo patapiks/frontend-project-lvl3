@@ -75,11 +75,12 @@ export default () => {
         .then((data) => {
           const { feed, posts } = parser(data.contents);
           state.feeds.unshift(feed);
-          posts.forEach((post) => {
+          const postsWithId = posts.map((post) => {
             const id = _.uniqueId();
-            state.posts.unshift({ ...post, id });
             state.uiState.posts.unshift({ id, visibality: 'hidden' });
+            return { ...post, id };
           });
+          state.posts.unshift(...postsWithId);
           state.links.push(url);
           watched.form.state = 'finished';
         })
