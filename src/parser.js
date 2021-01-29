@@ -8,12 +8,10 @@ const getTextContent = (source) => {
   const title = cleanCdata(source.querySelector('title').textContent);
   const description = cleanCdata(source.querySelector('description').innerHTML);
   const link = source.querySelector('link').nextSibling.textContent.split('\n')[0];
-  const state = 'not viewed';
   return {
     title,
     description,
     link,
-    state,
   };
 };
 
@@ -22,7 +20,7 @@ export default (data) => {
   const document = parser.parseFromString(data, 'text/html');
 
   const channel = document.querySelector('channel');
-  const channelContent = getTextContent(channel);
+  const feed = getTextContent(channel);
   const posts = [];
 
   const items = document.querySelectorAll('item');
@@ -31,6 +29,5 @@ export default (data) => {
     posts.push(postContent);
   });
 
-  const feed = [channelContent, posts];
-  return feed;
+  return { feed, posts };
 };
