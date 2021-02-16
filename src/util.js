@@ -8,9 +8,9 @@ export const validateUrl = (url, links) => {
   const schema = yup.string().url().required().notOneOf(links);
   try {
     schema.validateSync(url);
-    return { status: true };
+    return null;
   } catch (error) {
-    return { status: false, error: error.message };
+    return error.message;
   }
 };
 

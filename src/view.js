@@ -17,7 +17,7 @@ export default (state) => {
     headingPosts: document.querySelector('#headingPosts'),
   };
 
-  return onChange(state, (path, value) => {
+  const watchedState = onChange(state, (path, value) => {
     const {
       form,
       feeds,
@@ -71,4 +71,6 @@ export default (state) => {
         throw new Error(`Unexpected case value:"${value}"`);
     }
   });
+
+  return watchedState;
 };

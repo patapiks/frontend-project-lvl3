@@ -32,12 +32,12 @@ export default () => {
       state: 'filling',
       errors: null,
     },
+    updatingStatus: 'waiting',
     feeds: [],
     posts: [],
     uiState: {
       posts: [],
     },
-    links: [],
     modal: {
       state: 'hidden',
       id: null,
@@ -66,22 +66,22 @@ export default () => {
     watched.form.state = 'sending';
     const url = input.value;
 
-    const { status, error } = validateUrl(url, state.links);
-    if (!status) {
-      state.form.errors = error;
+    const declaredLinks = state.feeds.map(({ link }) => link);
+    const validationError = validateUrl(url, declaredLinks);
+    if (validationError) {
+      state.form.errors = validationError;
       watched.form.state = 'failed';
     } else {
       getContent(url)
         .then((data) => {
           const { feed, posts } = parser(data.contents);
-          state.feeds.unshift(feed);
+          state.feeds.unshift({ ...feed, link: url });
           const postsWithId = posts.map((post) => {
             const id = _.uniqueId();
             state.uiState.posts.unshift({ id, visibality: 'hidden' });
             return { ...post, id };
           });
           state.posts.unshift(...postsWithId);
-          state.links.push(url);
           watched.form.state = 'finished';
         })
         .catch((err) => {
@@ -96,11 +96,10 @@ export default () => {
         })
         .finally(function updating() {
           setTimeout(() => {
-            const promises = state.links.map((link) => {
+            const promises = state.feeds.map(({ link }) => {
               const result = addNewPosts(link, state.posts).then((newPosts) => {
                 newPosts.forEach((post) => {
                   const id = _.uniqueId();
-                  console.log(id);
                   state.posts.unshift({ ...post, id });
                   state.uiState.posts.unshift({ id, visibality: 'hidden' });
                 });
@@ -108,8 +107,8 @@ export default () => {
               return result;
             });
             Promise.all(promises).then(() => {
-              watched.form.state = 'updating';
-              state.form.state = 'filling';
+              watched.updatingStatus = 'updating';
+              state.updatingStatus = 'waiting';
               updating();
             });
           }, 5000);
