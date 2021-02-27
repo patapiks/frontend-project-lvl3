@@ -8,7 +8,8 @@ import resources from './locales/index';
 
 export default () => {
   const { en, ru } = resources;
-  i18next.init({
+  const i18nextInstance = i18next.createInstance();
+  i18nextInstance.init({
     lng: 'ru',
     debug: true,
     resources: {
