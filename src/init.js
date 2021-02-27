@@ -39,7 +39,6 @@ export default () => {
       posts: [],
     },
     modal: {
-      state: 'hidden',
       id: null,
     },
   };
@@ -48,69 +47,70 @@ export default () => {
 
   const postList = document.querySelector('#posts');
   postList.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') {
-      watched.uiState.posts.find((post) => post.id === e.target.id).visibality = 'viewed';
-    }
-    if (e.target.tagName === 'BUTTON') {
-      watched.uiState.posts.find((post) => post.id === e.target.id).visibality = 'viewed';
-      state.modal.id = e.target.id;
-      watched.modal.state = 'show';
-      state.modal.state = 'hidden';
-    }
+    watched.uiState = { posts: [...watched.uiState.posts, e.target.id] };
+    watched.modal = { id: e.target.id };
   });
 
   const input = document.querySelector('input');
   const form = document.querySelector('form');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    watched.form.state = 'sending';
+    watched.form = { state: 'sending' };
     const url = input.value;
 
     const declaredLinks = state.feeds.map(({ link }) => link);
     const validationError = validateUrl(url, declaredLinks);
     if (validationError) {
-      state.form.errors = validationError;
-      watched.form.state = 'failed';
+      watched.form = {
+        errors: validationError,
+        state: 'failed',
+      };
     } else {
       getContent(url)
         .then((data) => {
           const { feed, posts } = parser(data.contents);
-          state.feeds.unshift({ ...feed, link: url });
+          watched.feeds.unshift({ ...feed, link: url });
           const postsWithId = posts.map((post) => {
             const id = _.uniqueId();
-            state.uiState.posts.unshift({ id, visibality: 'hidden' });
             return { ...post, id };
           });
-          state.posts.unshift(...postsWithId);
-          watched.form.state = 'finished';
+          watched.posts.unshift(...postsWithId);
+          watched.form = { state: 'finished' };
         })
         .catch((err) => {
           // Refactoring check
           if (err.message === 'Network error') {
-            state.form.errors = i18next.t('errors.network');
-            watched.form.state = 'failed';
+            watched.form = {
+              errors: i18next.t('errors.network'),
+              state: 'failed',
+            };
           } else {
-            state.form.errors = i18next.t('errors.notRss');
-            watched.form.state = 'failed';
+            watched.form = {
+              errors: i18next.t('errors.notRss'),
+              state: 'failed',
+            };
           }
         })
         .finally(function updating() {
+          watched.updatingStatus = 'started';
           setTimeout(() => {
             const promises = state.feeds.map(({ link }) => {
               const result = addNewPosts(link, state.posts).then((newPosts) => {
                 newPosts.forEach((post) => {
                   const id = _.uniqueId();
-                  state.posts.unshift({ ...post, id });
-                  state.uiState.posts.unshift({ id, visibality: 'hidden' });
+                  watched.posts.unshift({ ...post, id });
                 });
               });
               return result;
             });
-            Promise.all(promises).then(() => {
-              watched.updatingStatus = 'updating';
-              state.updatingStatus = 'waiting';
-              updating();
-            });
+            Promise.all(promises)
+              .then(() => {
+                watched.updatingStatus = 'updated';
+                updating();
+              })
+              .catch(() => {
+                watched.updatingStatus = 'failed';
+              });
           }, 5000);
         });
     }
