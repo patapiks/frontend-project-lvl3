@@ -9,7 +9,7 @@ import resources from './locales/index';
 export default () => {
   const { en, ru } = resources;
   i18next.init({
-    lng: 'en',
+    lng: 'ru',
     debug: true,
     resources: {
       en,

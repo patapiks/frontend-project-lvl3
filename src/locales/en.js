@@ -1,7 +1,7 @@
 export default {
   translation: {
     loading: 'Please wait loading',
-    success: 'RSS успешно загружен',
+    success: 'Rss has been loaded',
     errors: {
       required: 'Please fill out this field',
       url: 'Must be valid url',
