@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import * as yup from 'yup';
+import { setLocale } from 'yup';
 import _ from 'lodash';
 import initView from './view';
 import parser from './parser';
@@ -18,13 +18,13 @@ export default () => {
     },
   });
 
-  yup.setLocale({
+  setLocale({
     mixed: {
-      required: i18next.t('errors.required'),
-      notOneOf: i18next.t('errors.duplicate'),
+      required: i18nextInstance.t('errors.required'),
+      notOneOf: i18nextInstance.t('errors.duplicate'),
     },
     string: {
-      url: i18next.t('errors.url'),
+      url: i18nextInstance.t('errors.url'),
     },
   });
 
@@ -44,7 +44,7 @@ export default () => {
     },
   };
 
-  const watched = initView(state);
+  const watched = initView(state, i18nextInstance);
 
   const postList = document.querySelector('#posts');
   postList.addEventListener('click', (e) => {
@@ -79,15 +79,16 @@ export default () => {
           watched.form = { state: 'finished' };
         })
         .catch((err) => {
+          console.log(err);
           // Refactoring check
           if (err.message === 'Network error') {
             watched.form = {
-              errors: i18next.t('errors.network'),
+              errors: i18nextInstance.t('errors.network'),
               state: 'failed',
             };
           } else {
             watched.form = {
-              errors: i18next.t('errors.notRss'),
+              errors: i18nextInstance.t('errors.notRss'),
               state: 'failed',
             };
           }

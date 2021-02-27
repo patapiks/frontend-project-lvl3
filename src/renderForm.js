@@ -1,7 +1,6 @@
-import i18next from 'i18next';
 import { renderFeeds, renderPosts } from './util';
 
-export default (value, elements, state) => {
+export default (value, elements, state, i18next) => {
   const {
     form,
     feeds,
@@ -12,6 +11,7 @@ export default (value, elements, state) => {
     headingFeeds,
     headingPosts,
   } = elements;
+  const { posts, uiState } = state;
 
   switch (value.state) {
     case 'sending':
@@ -39,7 +39,7 @@ export default (value, elements, state) => {
       headingFeeds.textContent = i18next.t('heading.feeds');
       feeds.innerHTML = renderFeeds(state.feeds);
       headingPosts.textContent = i18next.t('heading.posts');
-      postList.innerHTML = renderPosts(state.posts, state.uiState);
+      postList.innerHTML = renderPosts(posts, uiState, i18next);
 
       form.reset();
       input.focus();

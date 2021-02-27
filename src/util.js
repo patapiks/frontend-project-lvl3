@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import * as yup from 'yup';
 import _ from 'lodash';
 import axios from 'axios';
@@ -24,7 +23,7 @@ export const renderFeeds = (feeds) => {
   return result;
 };
 
-export const renderPosts = (posts, uiState) => {
+export const renderPosts = (posts, uiState, i18next) => {
   const result = posts
     .map(({ link, title, id }) => {
       // Delete class font-weight, after hexlet test
@@ -50,7 +49,7 @@ export const getContent = (url) => {
     .get(`${corsLink}${options}&url=${encodeURIComponent(url)}`)
     .then((response) => response.data)
     .catch(() => {
-      throw new Error(i18next.t('errors.network'));
+      throw new Error('Network error');
     });
 };
 

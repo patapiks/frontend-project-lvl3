@@ -2,7 +2,7 @@ import onChange from 'on-change';
 import { renderPosts, renderModal } from './util';
 import renderForm from './renderForm';
 
-export default (state) => {
+export default (state, i18next) => {
   const elements = {
     feedback: document.querySelector('#feedback'),
     button: document.querySelector('#formButton'),
@@ -18,17 +18,18 @@ export default (state) => {
   };
 
   const watchedState = onChange(state, (path, value) => {
+    const { posts, uiState } = state;
     switch (path) {
       case 'form':
-        renderForm(value, elements, state);
+        renderForm(value, elements, state, i18next);
         break;
       case 'updatingStatus':
         if (value === 'updated') {
-          elements.postList.innerHTML = renderPosts(state.posts, state.uiState);
+          elements.postList.innerHTML = renderPosts(posts, uiState, i18next);
         }
         break;
       case 'uiState':
-        elements.postList.innerHTML = renderPosts(state.posts, state.uiState);
+        elements.postList.innerHTML = renderPosts(posts, uiState, i18next);
         break;
       case 'modal':
         renderModal(state, elements);
