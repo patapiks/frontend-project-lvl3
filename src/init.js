@@ -48,7 +48,13 @@ export default () => {
 
   const postList = document.querySelector('#posts');
   postList.addEventListener('click', (e) => {
-    watched.uiState = { posts: [...watched.uiState.posts, e.target.id] };
+    const newUiStates = state.uiState.posts.filter(
+      // eslint-disable-next-line comma-dangle
+      ({ id }) => id !== e.target.id
+    );
+    watched.uiState = {
+      posts: [...newUiStates, { id: e.target.id, visibality: 'viewed' }],
+    };
     watched.modal = { id: e.target.id };
   });
 
@@ -73,6 +79,9 @@ export default () => {
           watched.feeds.unshift({ ...feed, link: url });
           const postsWithId = posts.map((post) => {
             const id = _.uniqueId();
+            watched.uiState = {
+              posts: [...state.uiState.posts, { id, visivality: 'unviewed' }],
+            };
             return { ...post, id };
           });
           watched.posts.unshift(...postsWithId);

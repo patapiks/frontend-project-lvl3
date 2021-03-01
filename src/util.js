@@ -27,9 +27,12 @@ export const renderPosts = (posts, uiState, i18next) => {
   const result = posts
     .map(({ link, title, id }) => {
       // Delete class font-weight, after hexlet test
-      const textClass = uiState.posts.includes(id)
-        ? 'fw-normal font-weight-normal'
-        : 'fw-bold font-weight-bold';
+      const currentUiState = uiState.posts.find((postUi) => postUi.id === id);
+      // eslint-disable-next-line operator-linebreak
+      const textClass =
+        currentUiState.visibality === 'viewed'
+          ? 'fw-normal font-weight-normal'
+          : 'fw-bold font-weight-bold';
       const post = `
     <li class="list-group-item d-flex justify-content-between align-items-start">
     <a id="${id}" target="_blank" href="${link}" class="${textClass}">${title}</a>
